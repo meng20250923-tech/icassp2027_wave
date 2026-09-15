@@ -1,0 +1,13 @@
+{
+  "image_size": 128,
+  "time_steps": 320,
+  "sensors": 48,
+  "sensor_radius_fraction": 0.395,
+  "iterations": 35,
+  "step_size": 0.18,
+  "tv_weight": 0.002,
+  "noise_std": 0.002,
+  "seed": 707,
+  "severity": 3.0,
+  "bad_channels": 4
+}
