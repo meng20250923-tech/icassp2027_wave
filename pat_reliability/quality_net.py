@@ -1,30 +1,10 @@
-"""QualityNet and its shared waveform-preparation utilities."""
+"""Shared waveform-preparation utilities for ContinuousRoute."""
 
 from __future__ import annotations
 
 import numpy as np
-import torch
-from torch import nn
 
 from .core import WaveOperator
-
-
-class QualityNet(nn.Module):
-    """Small 1-D CNN that maps observed/predicted/residual traces to q_m."""
-
-    def __init__(self, channels: int = 16) -> None:
-        super().__init__()
-        self.encoder = nn.Sequential(
-            nn.Conv1d(3, channels, kernel_size=7, padding=3),
-            nn.ReLU(inplace=True),
-            nn.Conv1d(channels, channels, kernel_size=5, padding=2),
-            nn.ReLU(inplace=True),
-            nn.AdaptiveAvgPool1d(1),
-        )
-        self.classifier = nn.Sequential(nn.Linear(channels, 8), nn.ReLU(inplace=True), nn.Linear(8, 1))
-
-    def forward(self, traces: torch.Tensor) -> torch.Tensor:
-        return self.classifier(self.encoder(traces).squeeze(-1)).squeeze(-1)
 
 
 def robust_prediction(operator: WaveOperator, data: np.ndarray) -> np.ndarray:
