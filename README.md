@@ -61,22 +61,56 @@ Python 3.10 or newer is recommended.
 python -m unittest discover -s tests -v
 ```
 
-## Simulation workflow
+## Reproducing Table 1 (simulation)
+
+Table 1 reports 100 fixed simulated cases with four severity-3 faulty
+channels. Random and contiguous layouts use test seeds 99101 and 99102,
+respectively. ContinuousRoute results are reported for independently trained
+models with seeds 51, 52, and 53. The final route uses a confidence threshold
+of 0.75 and the `no_residual_gate` setting.
+
+Train one model for each seed (replace `51` with `52` and `53`):
 
 ```bash
 python -m scripts.final.train \
   --config configs/local_128.json --seed 51 \
   --train-cases 2000 --validation-cases 400 \
   --output checkpoints/server_128/continuous/calibration_seed51_large.pt
-
-python -m scripts.final.evaluate \
-  --protocol mixed --config configs/local_128.json \
-  --checkpoint checkpoints/server_128/continuous/calibration_seed51_large.pt \
-  --test-seed 81051 --cases 100 --fault-count 4 \
-  --severity 3 --layout random
 ```
 
-Use `--protocol robust`, `hard`, `clean`, or `parameters` for the corresponding paper analyses. Run `python -m scripts.final.evaluate --help` for all options.
+For each trained model, run the following commands. Replace `seed51` in the
+checkpoint path with the matching model seed. The `hard` protocol reports the
+HardReject row, while `robust` reports the Huber row.
+
+```bash
+# Table 1: random layout
+python -m scripts.final.evaluate \
+  --protocol hard --config configs/local_128.json \
+  --checkpoint checkpoints/server_128/continuous/calibration_seed51_large.pt \
+  --test-seed 99101 --cases 100 --fault-count 4 --severity 3 \
+  --layout random --confidence 0.75 --ablation no_residual_gate --workers 16
+
+python -m scripts.final.evaluate \
+  --protocol robust --config configs/local_128.json \
+  --checkpoint checkpoints/server_128/continuous/calibration_seed51_large.pt \
+  --test-seed 99101 --cases 100 --fault-count 4 --severity 3 \
+  --layout random --confidence 0.75 --ablation no_residual_gate --workers 16
+
+# Table 1: contiguous layout
+python -m scripts.final.evaluate \
+  --protocol hard --config configs/local_128.json \
+  --checkpoint checkpoints/server_128/continuous/calibration_seed51_large.pt \
+  --test-seed 99102 --cases 100 --fault-count 4 --severity 3 \
+  --layout contiguous --confidence 0.75 --ablation no_residual_gate --workers 16
+
+python -m scripts.final.evaluate \
+  --protocol robust --config configs/local_128.json \
+  --checkpoint checkpoints/server_128/continuous/calibration_seed51_large.pt \
+  --test-seed 99102 --cases 100 --fault-count 4 --severity 3 \
+  --layout contiguous --confidence 0.75 --ablation no_residual_gate --workers 16
+```
+
+Run `python -m scripts.final.evaluate --help` for all evaluation options.
 
 ## Measured PATATO workflow
 
