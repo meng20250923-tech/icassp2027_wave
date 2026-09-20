@@ -67,7 +67,8 @@ Table 1 reports 100 fixed simulated cases with four severity-3 faulty
 channels. Random and contiguous layouts use test seeds 99101 and 99102,
 respectively. ContinuousRoute results are reported for independently trained
 models with seeds 51, 52, and 53. The final route uses a confidence threshold
-of 0.75 and the `no_residual_gate` setting.
+of 0.75. CalibrationNet receives the residual waveform, and `no_residual_gate`
+disables the additional residual-acceptance check.
 
 Train one model for each seed (replace `51` with `52` and `53`):
 

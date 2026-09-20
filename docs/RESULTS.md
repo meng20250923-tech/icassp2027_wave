@@ -41,7 +41,7 @@ Four severity-3 mixed faulty channels. `R` and `C` denote random and contiguous 
 
 Random severity-3 mixed faults. Preclinical frame rows use four faulty channels.
 
-| Condition | Equal | Route-1 | Route-2 | Route-3 |
+| Condition | Equal | CR-1 | CR-2 | CR-3 |
 |---|---:|---:|---:|---:|
 | Preclinical, 2 faulty | 31.962 | 35.142 | 35.104 | 39.721 |
 | Preclinical, 4 faulty | 27.405 | 37.025 | 36.681 | 34.772 |
@@ -59,4 +59,4 @@ Random severity-3 mixed faults. Preclinical frame rows use four faulty channels.
 - Full-channel rejection removes useful samples; localized correction and weighting retain more information.
 - OracleFull uses injected fault parameters and is an upper bound, not a deployable method.
 
-Source-of-truth LaTeX tables are `paper/draft/main_results_table.tex`, `paper/draft/simulation_analysis_table.tex`, and `paper/draft/measured_robustness_table.tex`.
+Values are transcribed from the manuscript tables.

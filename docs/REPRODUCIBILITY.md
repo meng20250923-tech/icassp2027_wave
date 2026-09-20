@@ -18,7 +18,6 @@ Measured PATATO experiments:
 - `pat_reliability/experimental/patato.py`
 - `pat_reliability/experimental/routing.py`
 
-`scripts/legacy/` and `pat_reliability/legacy/` contain earlier methods not used for the manuscript's ContinuousRoute results.
 
 ## Model seeds
 
